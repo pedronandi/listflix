@@ -8,6 +8,7 @@ import Footer from '../../components/Footer';
 /*
 //Above, React's and component's imports
 //Bellow, App component's (wich is Home component now) creation function
+//Test
 */
 
 function Home() {
