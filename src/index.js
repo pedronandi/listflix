@@ -1,17 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import Home from './pages/Home';
+import RegisterVideo from './pages/Register/Video';
+import RegisterCategory from './pages/Register/Category';
 
 ReactDOM.render(
-  <React.StrictMode>
+  /*SPA (Single Page Application) caracteristc, the pages doesn't reload on routing, they're just rendered*/
+  <BrowserRouter>
+    <Switch>
+      <Route path="/" component={Home} exact/>
+      <Route path="/Register/Video" component={RegisterVideo} />
+      <Route path="/Register/Category" component={RegisterCategory} />
+      <Route component={() => (<div>HTTP error 404! Page doesn't exists!</div>)} />
+    </Switch>
+  </BrowserRouter>,
+
+  /*<React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>,*/
+  
   document.getElementById('root')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
