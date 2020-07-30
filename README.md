@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Listflix was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a project developed by me during Alura's React Imersion week and it's based on Netflix page's layout.
 
 ## Available Scripts
 
