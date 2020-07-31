@@ -1,51 +1,81 @@
-import React, { useState} from 'react'; /*useState = Verbal object to notify components about other component's changes of state*/
+import React, { useState, useEffect } from 'react'; /* useState = Verbal object to notify components about other component's changes of state */
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
+import Button from '../../../components/Button';
 
 function RegisterCategory() {
-  /*Object*/
+  /* Object */
   const initialValues = {
     name: '',
     description: '',
     color: '',
-  }
+  };
 
   /*
   categories = Array of categories registered
   setCategory = function to add new category at the array
-  this semantics means that... 
+  this semantics means that...
   */
   const [categories, setCategory] = useState([]);
-  
+
   /*
   values = <key, value> data structure
   state is initialized whith initialValues (the object)
   */
   const [values, setValues] = useState(initialValues);
 
-  /*Functions*/
+  /* Functions */
   function setValue(key, value) {
     setValues({
       ...values,
-      [key]: value, /*name: 'value'*/
-    })
+      [key]: value, /* name: 'value' */
+    });
   }
 
   function handleChange(eventInfo) {
-    console.log('[CategoryName]', values.name);
-    console.log(eventInfo.target.value);
-    
     setValue(
-      /*eventInfo is the whole form's input (name, value, label, etc)*/
+      /* eventInfo is the whole form's input (name, value, label, etc) */
       eventInfo.target.getAttribute('name'),
-      eventInfo.target.value
+      eventInfo.target.value,
     );
   }
 
+  useEffect(() => {
+    const URL = 'http://localhost:8080/categorias';
+
+    fetch(URL) /* Return a promisse */
+      .then(async (serverReponse) => {
+        const response = await serverReponse.json();
+        setCategory([
+          ...response,
+        ]);
+      })
+      .then((serverResponseObject) => console.log(serverResponseObject));
+
+    /* setTimeout(() => {
+      setCategory([
+        ...categories,
+        {
+          name: 'Front End',
+          color: '#6BD1FF',
+          description: 'Formação de Front End na Alura',
+        },
+        {
+          name: 'Back End',
+          color: '#6BD1FF',
+          description: 'Formação de Back End na Alura',
+        },
+      ]);
+    }, 1 * 1000); */
+  }, []);
+
   return (
     <PageDefault>
-      <h1>Register New Category: {values.name}</h1>
+      <h1>
+        Register New Category:
+        {values.name}
+      </h1>
 
       <form onSubmit={function handleSubmit(eventInfo) {
         /*
@@ -54,19 +84,20 @@ function RegisterCategory() {
         what is determined by the code bellow
         */
         eventInfo.preventDefault();
-        
+
         setCategory([
           /*
           setCategory recieves a new list
           the '...' makes the new list start with all the content already inside 'categories'
           */
           ...categories,
-          values
+          values,
         ]);
 
         setValues(initialValues);
-      }}>
-      
+      }}
+      >
+
         <FormField
           label="Category's Name"
           type="text"
@@ -75,17 +106,13 @@ function RegisterCategory() {
           onChange={handleChange}
         />
 
-        <div>
-          <label>
-            Description:
-            <textarea
-              type="text"
-              name="description"
-              value={values.description}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
+        <FormField
+          label="Description"
+          type="textarea"
+          name="description"
+          value={values.description}
+          onChange={handleChange}
+        />
 
         <FormField
           label="Color"
@@ -94,32 +121,35 @@ function RegisterCategory() {
           value={values.color}
           onChange={handleChange}
         />
-        
-        <button>
+
+        <Button>
           Register
-        </button>
+        </Button>
       </form>
 
+      {categories.length === 0 && (
+        <div>
+          Loading...
+        </div>
+      )}
+
       <ul>
-        {categories.map((category, index) => {
+        {categories.map((category) => (
           /*
           key={} is the unique value of <li>
           key={`${category}${index}`} is a concatenation??
           */
-          return (
-            <li key={`${category}${index}`}>
-              {category.name}
-            </li>
-          )
-        })}
+          <li key={`${category.name}`}>
+            {category.name}
+          </li>
+        ))}
       </ul>
 
-
       <Link to="/">
-          Go to Home
+        Go to Home
       </Link>
     </PageDefault>
-  )
+  );
 }
 
 export default RegisterCategory;
