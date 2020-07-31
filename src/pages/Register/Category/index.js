@@ -43,38 +43,17 @@ function RegisterCategory() {
 
   useEffect(() => {
     /* const URL = 'http://localhost:8080/categorias'; */
-    const URLProd = 'https://listflix.herokuapp.com/';
+    const URL = 'https://listflix.herokuapp.com/categorias';
 
-    fetch(URLProd, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }) /* Return a promisse */
+    fetch(URL) /* Return a promisse */
       .then(async (serverReponse) => {
-        const response = await serverReponse.json();
-        setCategory([
-          ...response,
-        ]);
-      })
-      // eslint-disable-next-line no-console
-      .then((serverResponseObject) => console.log(serverResponseObject));
-
-    /* setTimeout(() => {
-      setCategory([
-        ...categories,
-        {
-          name: 'Front End',
-          color: '#6BD1FF',
-          description: 'Formação de Front End na Alura',
-        },
-        {
-          name: 'Back End',
-          color: '#6BD1FF',
-          description: 'Formação de Back End na Alura',
-        },
-      ]);
-    }, 1 * 1000); */
+        if (serverReponse.ok) {
+          const response = await serverReponse.json();
+          setCategory(response);
+          return;
+        }
+        throw new Error('Could not reach data!');
+      });
   }, []);
 
   return (
@@ -134,11 +113,11 @@ function RegisterCategory() {
         </Button>
       </form>
 
-      {categories.length === 0 && (
+      {/* {categories.length === 0 && (
         <div>
           Loading...
         </div>
-      )}
+      )} */}
 
       <ul>
         {categories.map((category) => (
