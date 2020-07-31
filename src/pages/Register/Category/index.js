@@ -16,7 +16,6 @@ function RegisterCategory() {
   categories = Array of categories registered
   setCategory = function to add new category at the array
   this semantics means that...
-  test
   */
   const [categories, setCategory] = useState([]);
 
