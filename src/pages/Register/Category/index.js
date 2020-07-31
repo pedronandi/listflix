@@ -42,15 +42,17 @@ function RegisterCategory() {
   }
 
   useEffect(() => {
-    const URL = 'http://localhost:8080/categorias';
+    /* const URL = 'http://localhost:8080/categorias'; */
+    const URLProd = 'https://listflix.herokuapp.com/';
 
-    fetch(URL) /* Return a promisse */
+    fetch(URLProd) /* Return a promisse */
       .then(async (serverReponse) => {
         const response = await serverReponse.json();
         setCategory([
           ...response,
         ]);
       })
+      // eslint-disable-next-line no-console
       .then((serverResponseObject) => console.log(serverResponseObject));
 
     /* setTimeout(() => {
