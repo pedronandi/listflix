@@ -1,7 +1,7 @@
 {
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Front End",
       "description": "Formação de Front End na Alura",
       "color": "#6BD1FF"
@@ -9,7 +9,7 @@
    ],
   "videos": [
     {
-      "categoryId": 1,
+      "categoryId": "1",
       "name": "SEO com React",
       "link": "https://www.youtube.com/watch?v=c8mVlakBESE"
     }
