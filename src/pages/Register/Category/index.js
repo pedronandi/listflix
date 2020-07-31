@@ -45,7 +45,12 @@ function RegisterCategory() {
     /* const URL = 'http://localhost:8080/categorias'; */
     const URLProd = 'https://listflix.herokuapp.com/';
 
-    fetch(URLProd) /* Return a promisse */
+    fetch(URLProd, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }) /* Return a promisse */
       .then(async (serverReponse) => {
         const response = await serverReponse.json();
         setCategory([
