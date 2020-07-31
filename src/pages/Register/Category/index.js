@@ -49,7 +49,7 @@ function RegisterCategory() {
       .then(async (serverReponse) => {
         if (serverReponse.ok) {
           const response = await serverReponse.json();
-          setCategory(response);
+          setCategory([...response]);
           return;
         }
         throw new Error('Could not reach data!');
