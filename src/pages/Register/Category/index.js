@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 function RegisterCategory() {
   /* Object */
@@ -12,6 +13,8 @@ function RegisterCategory() {
     color: '',
   };
 
+  const { handleChange, values, clearForm } = useForm(initialValues);
+
   /*
   categories = Array of categories registered
   setCategory = function to add new category at the array
@@ -19,31 +22,11 @@ function RegisterCategory() {
   */
   const [categories, setCategory] = useState([]);
 
-  /*
-  values = <key, value> data structure
-  state is initialized whith initialValues (the object)
-  */
-  const [values, setValues] = useState(initialValues);
-
-  /* Functions */
-  function setValue(key, value) {
-    setValues({
-      ...values,
-      [key]: value, /* name: 'value' */
-    });
-  }
-
-  function handleChange(eventInfo) {
-    setValue(
-      /* eventInfo is the whole form's input (name, value, label, etc) */
-      eventInfo.target.getAttribute('name'),
-      eventInfo.target.value,
-    );
-  }
-
   useEffect(() => {
-    /* const URL = 'http://localhost:8080/categorias'; */
-    const URL = 'https://listflix.herokuapp.com/categorias';
+    /* 'http://localhost:8080/categorias'; */
+    const URL = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://listflix.herokuapp.com/categorias';
 
     fetch(URL) /* Return a promisse */
       .then(async (serverReponse) => {
@@ -54,7 +37,7 @@ function RegisterCategory() {
         }
         throw new Error('Could not reach data!');
       });
-  }, []);
+  }, [/* When it might run.. If it's empty, it'll run at the begining... */]);
 
   return (
     <PageDefault>
@@ -80,7 +63,7 @@ function RegisterCategory() {
           values,
         ]);
 
-        setValues(initialValues);
+        clearForm(initialValues);
       }}
       >
 

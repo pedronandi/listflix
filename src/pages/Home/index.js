@@ -1,5 +1,5 @@
 import React from 'react';
-import Menu from '../../components/Menu'
+import Menu from '../../components/Menu';
 import initialData from '../../data/initial_data.json';
 import BannerMain from '../../components/BannerMain';
 import Carousel from '../../components/Carousel';
@@ -12,7 +12,7 @@ import Footer from '../../components/Footer';
 
 function Home() {
   return (
-    <div style={{ background: "#141414" }}>
+    <div style={{ background: '#141414' }}>
       <Menu />
 
       <BannerMain
@@ -32,23 +32,23 @@ function Home() {
 
       <Carousel
         category={initialData.categorias[2]}
-      />      
+      />
 
       <Carousel
         category={initialData.categorias[3]}
-      />      
+      />
 
       <Carousel
         category={initialData.categorias[4]}
-      />      
+      />
 
       <Carousel
         category={initialData.categorias[5]}
-      />      
+      />
 
       <Footer />
     </div>
   );
 }
 
-export default Home; //Exportation of the component's function
+export default Home; // Exportation of the component's function
