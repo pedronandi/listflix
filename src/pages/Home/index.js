@@ -1,9 +1,8 @@
-import React from 'react';
-import Menu from '../../components/Menu';
-import initialData from '../../data/initial_data.json';
+import React, { useEffect, useState } from 'react';
 import BannerMain from '../../components/BannerMain';
 import Carousel from '../../components/Carousel';
-import Footer from '../../components/Footer';
+import categoriesRepository from '../../repositories/categories';
+import PageDefault from '../../components/PageDefault';
 
 /*
 //Above, React's and component's imports
@@ -11,43 +10,49 @@ import Footer from '../../components/Footer';
 */
 
 function Home() {
+  const [initialData, setInitialData] = useState([]);
+
+  useEffect(() => {
+    categoriesRepository.getAllWithVideos()
+      .then((categoriesWithVideos) => {
+        setInitialData(categoriesWithVideos);
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log(err.message);
+      });
+  }, []);
+
   return (
-    <div style={{ background: '#141414' }}>
-      <Menu />
+    <PageDefault>
+      {initialData.length === 0 && (<div>Loading...</div>)}
 
-      <BannerMain
-        videoTitle={initialData.categorias[0].videos[0].titulo}
-        url={initialData.categorias[0].videos[0].url}
-        videoDescription={"On this video, firt class of Alura's React Imersion, guys starts explaining the basics about the framework and, at the end, they deliver the home page code, also they make a deploy! It's amazing!"}
-      />
+      {initialData.map((category, index) => {
+        if (index === 0) {
+          return (
+            <div key={category.id}>
+              <BannerMain
+                videoTitle={initialData[0].videos[0].titulo}
+                url={initialData[0].videos[0].url}
+                videoDescription={"On this video, firt class of Alura's React Imersion, guys starts explaining the basics about the framework and, at the end, they deliver the home page code, also they make a deploy! It's amazing!"}
+              />
 
-      <Carousel
-        ignoreFirstVideo
-        category={initialData.categorias[0]}
-      />
+              <Carousel
+                ignoreFirstVideo
+                category={initialData[0]}
+              />
+            </div>
+          );
+        }
 
-      <Carousel
-        category={initialData.categorias[1]}
-      />
-
-      <Carousel
-        category={initialData.categorias[2]}
-      />
-
-      <Carousel
-        category={initialData.categorias[3]}
-      />
-
-      <Carousel
-        category={initialData.categorias[4]}
-      />
-
-      <Carousel
-        category={initialData.categorias[5]}
-      />
-
-      <Footer />
-    </div>
+        return (
+          <Carousel
+            key={category.id}
+            category={category}
+          />
+        );
+      })}
+    </PageDefault>
   );
 }
 

@@ -14,7 +14,7 @@ ReactDOM.render(
       <Route path="/" component={Home} exact />
       <Route path="/Register/Video" component={RegisterVideo} />
       <Route path="/Register/Category" component={RegisterCategory} />
-      <Route component={() => (<div>HTTP error 404! Page doesn't exists!</div>)} />
+      <Route component={() => (<div>HTTP error 404! Page does not exists!</div>)} />
     </Switch>
   </BrowserRouter>,
 
